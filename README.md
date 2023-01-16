@@ -15,9 +15,6 @@
 13. Lorem Ipsum
 14. Grocery Bud
 15. Slider
-
-#### Course Exclusive
-
 16. Counters (OOP)
 17. Gallery (OOP)
 18. Numbers
