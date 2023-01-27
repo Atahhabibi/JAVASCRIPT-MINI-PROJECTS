@@ -1,20 +1,13 @@
 const companiesElement=document.querySelector('.companies');
 const productsElement=document.querySelector('.products-container');
 const SearchInput=document.querySelector('.search-input');
-const value=SearchInput.value;
-console.log(value);
+const form=document.querySelector('.input-form');
+let filterdProducts=[...products];
 
-let companies=products.map((item)=>item.company)
-companies=['all',...new Set(companies)];
 
-companies=companies.map((item)=>{
-   return  `<button class="company-btn">${item}</button>`
-}).join("")
+const displayProducts=(item=products)=>{
 
-companiesElement.innerHTML=companies;
-console.log(products);
-
-let newProducts=products.map((item)=>{
+  let newProducts=item.map((item)=>{
 
     const {id,title,company,image,price}=item;
     return `<article class="product">
@@ -29,14 +22,58 @@ let newProducts=products.map((item)=>{
   </article>`
 }).join("");
 
+  productsElement.innerHTML=newProducts;
 
-window.addEventListener('DOMContentLoaded',()=>{
-    productsElement.innerHTML=newProducts;
+}
+
+let companies=products.map((item)=>item.company)
+companies=['all',...new Set(companies)];
+
+companies=companies.map((item)=>{
+    return `<button class="company-btn">${item}</button>`
+ 
+}).join("");
+
+
+companiesElement.innerHTML=companies;
+
+const btns=document.querySelectorAll('.company-btn');
+
+btns.forEach((btn)=>{
+  btn.addEventListener('click',()=>{
+    const company=btn.textContent;
+
+    if(company==='all'){
+      displayProducts(products);
+    }else{
+      filterdProducts=products.filter((product)=>product.company===company);
+      displayProducts(filterdProducts);
+
+    }
+
+  })
 })
 
 
-SearchInput.addEventListener('change',()=>{
-    // console.log('change');
+
+
+window.addEventListener('DOMContentLoaded',()=>{
+   displayProducts();
+})
+
+
+form.addEventListener('keyup',()=>{
+
+    const inputValue=SearchInput.value;
+    filterdProducts=products.filter((product)=>product.title.toLowerCase().includes(inputValue.toLowerCase()));
+
+    if(filterdProducts.length<1){
+         productsElement.innerHTML=`<strong>sorry, no product match your search</strong> `;
+    }else{
+      displayProducts(filterdProducts)
+    }
+
+    
 })
 
 
