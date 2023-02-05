@@ -7,7 +7,17 @@ const allProductsUrl = 'https://course-api.com/javascript-store-products'
 const singleProductUrl ='https://course-api.com/javascript-store-single-product?id='
 
 
-const formatPrice = () => {}
+const formatPrice = (price) => {
+
+  let formattedPrice=new Intl.NumberFormat('en-US',
+  {
+    style:"currency",
+    currency:"USD",
+  }).format((price/100).toFixed(2))
+
+  return formattedPrice;
+
+}
 
 const getStorageItem = (name) => {
   let storageItem=localStorage.getItem(name);
